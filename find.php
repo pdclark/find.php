@@ -11,6 +11,9 @@
 
 @include 'wp-config.php';
 
+/**
+  * Load WordPress database if this file is in the same directory as wp-config.php
+  */
 if (defined('DB_NAME')) {
 	$database = array(
 		'host'     => DB_HOST,
@@ -19,6 +22,9 @@ if (defined('DB_NAME')) {
 		'password' => DB_PASSWORD,
 	);
 }else {
+
+	// If wp-config.php wasn't found, use these settings
+
 	$database = array(
 		'host'     => 'localhost',
 		'user'     => '',
@@ -34,17 +40,24 @@ if (defined('DB_NAME')) {
  * That's it! Load this script in a browser to run it.
 */
 $find_replace = array(
+	// 'OldText' => 'NewText',
 	'' => '',
 );
 
-// Undo if needed
-// -- Note: This may be A Bad Idea™
-// -- e.g., {page_home_title} will always match to "Home", but "Home" may not always match to {page_home_title}, like one client: Home Matters
+/**
+ * Undo if needed
+ *    Note: This may be A Bad Idea™
+ *    e.g., {page_home_title} will always match to "Home",
+ *    but "Home" may not always match to {page_home_title},
+ *    like one client: Home Matters
+ */
 // $find_replace = array_flip( $find_replace );
 
-#  ==========================
-#	Output
-#  ========================={
+
+
+/**
+ * Output  --  You're done! Stop editing!
+ */
 ?>
 	<html>
 		<head>
@@ -63,7 +76,7 @@ $find_replace = array(
 	</html>
 <?php
 	
-#}end Output
+// end Output
 
 
 class Storm_Find_Replace {
