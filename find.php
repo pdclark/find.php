@@ -62,7 +62,7 @@ $find_replace = array(
 	<html>
 		<head>
 			<style>
-				body {font-family:"Panic Sans", Courier, monospace;}
+				body {font-family:"Panic Sans", Courier, monospace; margin:30px;}
 				h1,h2,h3 {font-weight:normal;}
 				.sql {display:block; margin-top:1em;margin-left:3em;margin-bottom:2em;background-color:#ffaaaa;}
 				.report {margin:auto; text-align:center;background-color:#ccc;}
@@ -134,10 +134,21 @@ class Storm_Find_Replace {
 	var $cid; // MySQL connection ID
 
 	function __construct( $find_replace, $database ) {
-		if ( strpos($_SERVER['DOCUMENT_ROOT'], '/Users/') !== false && empty($_GET['verify']) ) {
+		if ( empty($_GET['verify']) ) {
 			?>
-			<p>It looks like you are on a live server. Are you sure you want to continue?</p>
-			<p><a href="<?php echo $_SERVER['REQUEST_URI'] ?>?verify=1">Yes, I've made a backup of this database</a>.</p>
+			<p>Running this script will make permanent changes to your database:</p>
+
+			<?php if ( !empty($find_replace) ) : ?>
+				<ul>
+				<?php foreach ( $find_replace as $find => $replace ) : ?>
+					<li>Change "<?php echo $find ?>" to "<?php echo $replace ?>"</li>
+				<?php endforeach; ?>
+				</ul>
+			<?php endif; ?>
+
+			<p>Are you sure you want to continue?</p>
+
+			<p><a href="<?php echo $_SERVER['REQUEST_URI'] ?>?verify=1">Yes, I have made a backup of this database</a>.</p>
 			<?php
 			exit;
 		}
